@@ -10,9 +10,9 @@ public class Send {
         Scanner sc=new Scanner(System.in);
         ConvertFile conv=new ConvertFile();
         System.out.print("Enter n for length prime ==> ");
-        int n=sc.nextInt();
+        BigInteger n=sc.nextBigInteger();
         // String inputfile="D:/Crypto/code/input.txt";
-        
+
         //===============================input data and convert to plaintext binary================================================
         System.out.print("Enter 1 for message 2 for file ==> ");
         int choose=sc.nextInt();
@@ -33,26 +33,35 @@ public class Send {
         System.out.println(binarytext);
         System.out.println("Data length = "+binarytext.length());
         
-        // ==============================random number=====================================================
+        // ==============================random number p=====================================================
         
-        BigInteger minP=Power(n-1);
-        BigInteger maxP=Power(n);
+        BigInteger minP=Power(BigInteger.TWO,n.subtract(BigInteger.ONE));
+        BigInteger maxP=Power(BigInteger.TWO,n);
         System.out.println("minP is "+minP);
         System.out.println("maxP is "+maxP);
-        BigInteger p = RandomNumber(minP,maxP);
+        BigInteger p = RandomNumber(minP.add(BigInteger.ONE),maxP.subtract(BigInteger.ONE));
         System.out.println("Random Number: " + p);
 
         // ==============================check prime=====================================================
+
+
+        // ==============================random g and u=====================================================
+        BigInteger g = RandomNumber(BigInteger.ONE,p.subtract(BigInteger.ONE));
+        BigInteger u = RandomNumber(BigInteger.ZERO,p.subtract(BigInteger.ONE));
+        System.out.println("G Number: " + g);
+        System.out.println("U Number: " + u);
+        BigInteger y = Power(g,u).mod(p);
+        System.out.println("Y Number: " + y);
         
     }
 
     
-    public static BigInteger Power(int num){
-        int base = 2, exponent = num;
-        BigInteger result = BigInteger.valueOf(1);
+    public static BigInteger Power(BigInteger base,BigInteger num){
+        BigInteger exponent = num;
+        BigInteger result = BigInteger.ONE;
 
-        for (; exponent != 0; --exponent) {
-            result =result.multiply(BigInteger.valueOf(base));
+        for (; exponent.compareTo(BigInteger.ZERO) != 0; exponent = exponent.subtract(BigInteger.ONE)) {
+            result =result.multiply(base);
         }
         return result;
     }
