@@ -12,6 +12,7 @@ public class Send {
         System.out.print("Enter n for length prime ==> ");
         int n=sc.nextInt();
         // String inputfile="D:/Crypto/code/input.txt";
+        
         //===============================input data and convert to plaintext binary================================================
         System.out.print("Enter 1 for message 2 for file ==> ");
         int choose=sc.nextInt();
@@ -32,7 +33,7 @@ public class Send {
         System.out.println(binarytext);
         System.out.println("Data length = "+binarytext.length());
         
-        // ==============================generate key=====================================================
+        // ==============================random number=====================================================
         
         BigInteger minP=Power(n-1);
         BigInteger maxP=Power(n);
@@ -40,8 +41,12 @@ public class Send {
         System.out.println("maxP is "+maxP);
         BigInteger p = RandomNumber(minP,maxP);
         System.out.println("Random Number: " + p);
+
+        // ==============================check prime=====================================================
         
     }
+
+    
     public static BigInteger Power(int num){
         int base = 2, exponent = num;
         BigInteger result = BigInteger.valueOf(1);
